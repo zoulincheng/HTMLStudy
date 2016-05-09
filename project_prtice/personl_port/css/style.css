@@ -1,0 +1,24 @@
+  .darkmagenta-box {
+    background-color: DarkMagenta;
+    padding: 20px;
+  }
+
+.imgwidth{
+  width:500px;
+}
+
+.imgwidth1{
+  width:400px;
+}
+
+.imgsize{
+ display:block;
+ width:40px;
+ left:100px;
+ right:100px;
+}
+ .thick-green-border {
+    border-color: green;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 50%;
