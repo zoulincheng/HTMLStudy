@@ -77,14 +77,519 @@ git checkout -b my_previous_version 085bb3bcb
 在第一次你想推送一个本地代码库到远程代码库时，你需要把它添加到你的项目配置里。像这样做
 
 $ git remote add origin git@github.com:nanfei9330/learngit.git
+git remote add origin https://github.com/try-git/try_git.git
 
 注意这里的“origin”只是一个习惯。它是你的远程代码库的别名，但是你可以用其他任何你喜欢的词。你甚至可以有多个远程代码库，你只需要给它们起不同的别名。
 之后，你想要推送你的本地代码库的主干分支到你的远程代码库：
 git push origin master
 
+The push command tells Git where to put our commits when we're ready, and boy we're ready. So let's push our local changes to our origin repo (on GitHub).
+
+The name of our remote is origin and the default local branch name is master. The -u tells Git to remember the parameters, so that next time we can simply run git push and Git will know what to do. Go ahead and push it!
+
+git push -u origin master
+
 取得远程代码库的一份本地拷贝
 
 如果你还没有一份远程代码库的本地版本（例如，如果你在另一台机器上开始工作，这台机器上还没有用过这个项目），你首先需要拷贝（clone）它。去到你的代码库想要拷贝到的文件夹下，并发送：
+
+Good, now go ahead and run git diff with the --staged option to see the changes you just staged. You should see that octodog.txt was created.
+
+git diff --staged
+
+
+Resetting the Stage
+
+
+So now that octodog is part of the family, octocat is all depressed. Since we love octocat more than octodog, we'll turn his frown around by removing octodog.txt.
+
+You can unstage files by using the git reset command. Go ahead and remove octofamily/octodog.txt.
+
+git reset octofamily/octodog.txt
+
+
+1.17 Undo
+
+
+git reset did a great job of unstaging octodog.txt, but you'll notice that he's still there. He's just not staged anymore. It would be great if we could go back to how things were before octodog came around and ruined the party.
+
+Files can be changed back to how they were at the last commit by using the command: git checkout -- <target>. Go ahead and get rid of all the changes since the last commit for octocat.txt
+
+git checkout -- octocat.txt
+
+1.18 Branching Out
+
+
+When developers are working on a feature or bug they'll often create a copy (aka. branch) of their code they can make separate commits to. Then when they're done they can merge this branch back into their main master branch.
+
+We want to remove all these pesky octocats, so let's create a branch called clean_up, where we'll do all the work:
+
+git branch clean_up
+
+You can use:
+
+git checkout -b new_branch
+
+to checkout and create a branch at the same time. This is the same thing as doing:
+
+git branch new_branch
+git checkout new_branch
+
+
+1.20 Removing All The Things
+
+
+Ok, so you're in the clean_up branch. You can finally remove all those pesky octocats by using the git rm command which will not only remove the actual files from disk, but will also stage the removal of the files for us.
+
+You're going to want to use a wildcard again to get all the octocats in one sweep, go ahead and run:
+
+git rm '*.txt'
+
+Removing one file is great and all, but what if you want to remove an entire folder? You can use the recursive option on git rm:
+
+git rm -r folder_of_cats
+
+This will recursively remove all folders and files from the given directory.
+
+
+1.21 Commiting Branch Changes
+
+
+Now that you've removed all the cats you'll need to commit your changes.
+
+Feel free to run git status to check the changes you're about to commit.
+
+git commit -m "Remove all the cats"
+
+
+ 
+
+
+
+
+
+Advice
+
+
+
+
+The '-a' option
+
+If you happen to delete a file without using 'git rm' you'll find that you still have to 'git rm' the deleted files from the working tree. You can save this step by using the '-a' option on 'git commit', which auto removes deleted files with the commit.
+
+git commit -am "Delete stuff"
+
+
+
+1.22 Switching Back to master
+
+
+Great, you're almost finished with the cat... er the bug fix, you just need to switch back to the master branch so you can copy (or merge) your changes from the clean_up branch back into the master branch.
+
+Go ahead and checkout the master branch:
+
+git checkout master
+
+
+
+Pull Requests
+
+If you're hosting your repo on GitHub, you can do something called a pull request.
+
+A pull request allows the boss of the project to look through your changes and make comments before deciding to merge in the change. It's a really great feature that is used all the time for remote workers and open-source projects.
+
+Check out the pull request help page for more information.
+
+
+1.23 Preparing to Merge
+
+
+Alrighty, the moment has come when you have to merge your changes from the clean_up branch into the master branch. Take a deep breath, it's not that scary.
+
+We're already on the master branch, so we just need to tell Git to merge the clean_up branch into it:
+
+git merge clean_up
+
+
+
+Merge Conflicts
+
+Merge Conflicts can occur when changes are made to a file at the same time. A lot of people get really scared when a conflict happens, but fear not! They aren't that scary, you just need to decide which code to keep.
+
+Merge conflicts are beyond the scope of this course, but if you're interested in reading more, take a look the section of the Pro Git book on how conflicts are presented.
+
+
+
+1.24 Keeping Things Clean
+
+
+Congratulations! You just accomplished your first successful bugfix and merge. All that's left to do is clean up after yourself. Since you're done with the clean_up branch you don't need it anymore.
+
+You can use git branch -d <branch name> to delete a branch. Go ahead and delete the clean_up branch now:
+
+git branch -d clean_up
+
+
+What if you have been working on a feature branch and you decide you really don't want this feature anymore? You might decide to delete the branch since you're scrapping the idea. You'll notice that git branch -d bad_feature doesn't work. This is because -d won't let you delete something that hasn't been merged.
+
+You can either add the --force (-f) option or use -D which combines -d -f together into one command.
+
+
+1.25 The Final Push
+
+
+Here we are, at the last step. I'm proud that you've made it this far, and it's been great learning Git with you. All that's left for you to do now is to push everything you've been working on to your remote repository, and you're done!
+
+git push
+
+
+
+Learning more about Git
+
+We only scratched the surface of Git in this course. There is so much more you can do with it. Check out the Git documentation for a full list of functions.
+
+The Pro Git book, by Scott Chacon, is an excellent resource to teach you the inner workings of Git.
+
+help.github and GitHub Training are also great for anything related to Git in general and using Git with GitHub.
+
+
+
+
+
+Code School 
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+
+
+1.25 The Final Push
+
+
+Great! You now have a little taste of the greatness of Git. You can take a look at the wrap up page for a little more information on Git and GitHub, oh, and of course your badge!
+
+Wrap it all Up
+
+
+
+
+ 
+
+
+Close
+
+
+Minimize
+
+
+Maximize
+
+
+TryGit—1300x310 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+diff --git a/octocat.txt b/octocat.txt
+index 7d8d808..e725ef6 100644
+--- a/octocat.txt
++++ b/octocat.txt
+@@ -1 +1 @@
+-A Tale of Two Octocats
++[mA Tale of Two Octocats and an Octodog
+
+
+
+Success!
+
+
+
+$ git add octofamily/octodog.txt
+
+ 
+
+
+
+
+
+
+Success!
+
+
+
+$ git -diff --staged
+
+ 
+
+
+invalid option -- d
+
+
+
+$ git diff --staged
+
+ 
+
+
+diff --git a/octofamily/octodog.txt b/octofamily/octodog.txt
+new file mode 100644
+index 0000000..cfbc74a
+--- /dev/null
++++ b/octofamily/octodog.txt
+@@ -0,0 +1 @@
++[mwoof
+
+
+
+Success!
+
+
+
+$ git reset octofamily/octodog.txt
+
+ 
+
+
+
+
+
+Success!
+
+
+
+$ git checkout -- octocat.txt
+
+ 
+
+
+
+
+
+
+Success!
+
+
+
+$ git branch clean_up
+
+ 
+
+
+
+
+
+
+Success!
+
+
+
+$ git checkout clean_up
+
+ 
+
+
+Switched to branch 'clean_up'
+
+
+
+Success!
+
+
+
+$ git rm '*.txt'
+
+ 
+
+
+rm 'blue_octocat.txt'
+rm 'octocat.txt'
+rm 'octofamily/baby_octocat.txt'
+rm 'octofamily/momma_octocat.txt'
+rm 'red_octocat.txt'
+
+
+
+Success!
+
+
+
+$ git commit -m "Remove all the cats"
+
+ 
+
+
+[clean_up 63540fe] Remove all the cats
+ 5 files changed, 5 deletions(-)
+ delete mode 100644 blue_octocat.txt
+ delete mode 100644 octocat.txt
+ delete mode 100644 octofamily/baby_octocat.txt
+ delete mode 100644 octofamily/momma_octocat.txt
+ delete mode 100644 red_octocat.txt
+
+Success!
+
+$ git checkout master
+
+Switched to branch 'master'
+Success!
+
+$ git merge clean_up
+
+Updating 3852b4d..ec6888b
+Fast-forward
+ blue_octocat.txt             |    1 -
+ octocat.txt                  |    1 -
+ octofamily/baby_octocat.txt  |    1 -
+ octofamily/momma_octocat.txt |    1 -
+ red_octocat.txt              |    1 -
+ 5 files changed, 5 deletions(-)
+ delete mode 100644 blue_octocat.txt
+ delete mode 100644 octocat.txt
+ delete mode 100644 octofamily/baby_octocat.txt
+ delete mode 100644 octofamily/momma_octocat.txt
+ delete mode 100644 red_octocat.txt
+
+Success!
+$ git branch -d clean_up
+
+ 
+Deleted branch clean_up (was ec6888b).
+
+Success!
+
+$ git push
+
+To https://github.com/try-git/try_git.git
+   3e70b0f..b576450  master -> master
+
+Success!
+
+
+
+
+
+
+
 
 git clone git@github.com:nanfei9330/learngit.git
 
