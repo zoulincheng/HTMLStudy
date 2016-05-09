@@ -76,7 +76,7 @@ git checkout -b my_previous_version 085bb3bcb
 推送到远程代码库
 在第一次你想推送一个本地代码库到远程代码库时，你需要把它添加到你的项目配置里。像这样做
 
-git remote add origin https://your_username@bitbucket.org/your_username/name_of_remote_repository.git
+$ git remote add origin git@github.com:nanfei9330/learngit.git
 
 注意这里的“origin”只是一个习惯。它是你的远程代码库的别名，但是你可以用其他任何你喜欢的词。你甚至可以有多个远程代码库，你只需要给它们起不同的别名。
 之后，你想要推送你的本地代码库的主干分支到你的远程代码库：
@@ -86,7 +86,7 @@ git push origin master
 
 如果你还没有一份远程代码库的本地版本（例如，如果你在另一台机器上开始工作，这台机器上还没有用过这个项目），你首先需要拷贝（clone）它。去到你的代码库想要拷贝到的文件夹下，并发送：
 
-git clone https://your_username@bitbucket/your_username/name_of_remote_repository.git
+git clone git@github.com:nanfei9330/learngit.git
 
 别名
 
