@@ -1,0 +1,679 @@
+//All operation in cmd line
+
+//config local param
+//if you config the param to one machine, when you work on another machine
+//you must config the param same to the that you work the machine
+
+git config --global user.name "your_name"
+git config --global user.email "your_email"
+
+git config --global push.default simple
+
+
+//build a repository in the workspace
+//for example workspace is f:\hello, come to this dir
+git init
+
+//add  all files 最后的“.”符号的意思是“所有文件、文件夹和子文件夹”。假如我们只想要把特定文件添加到源代码控制中去，我们
+可以指定它们：
+git add .
+//add specify file
+git add file1 file2 file 3
+
+//commit file
+git commit -m "some desprition"
+
+git status
+
+//create branch
+git checkout -b branch_name
+
+//check branch
+git branch
+
+
+//merge branch to master
+当你对你的新功能满意了的时候，你想要把它加到主干分支上。当你在你的新功能分支上时，你首先需要加载
+（stage）并且提交你的文件：
+git add .git commit -m "some descprition"
+git checkout master   //come back master
+git merge branch_name
+
+丢弃分支
+相反，如果你打算丢弃你在分支里做的修改，你首先需要加载（stage）你的文件并且在分支里提交：
+git add .git commit -m "feature to be discarded"
+
+git checkout master
+
+删除分支
+假如修改已经合并了，它只会删除分支。假如分支没有合并，你会得到一个错误信息。删除一个未合并的分支（通
+常你不想保留的修改），你需要发送一样的命令附带一个大写D。意思是“强制删除分支，无论如何我不想要它
+了。”：
+git branch -d branch_name
+
+git branch -D branch_name
+
+
+回滚到之前的提交状态
+在某些时候，你可能想要回到之前的代码版本。首先，你需要找到你想回到哪个版本。要看所有的完成了的提交，
+发送：
+git log
+
+如果你想回到“adds my new feature”这个提交，简单地用提交的ID做签出（checkout）（我通常只用到ID开头的9个
+字符）
+
+commit
+ca82a6dff817ec66f44342007202690a93763949Author: your_username your_email@domain.comDate
+
+commit
+085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7Author: your_username your_email@domain.comDate:
+
+git checkout 085bb3bc
+
+你也可以签出到一个新的分支，像这样：
+git checkout -b my_previous_version 085bb3bcb
+
+推送到远程代码库
+在第一次你想推送一个本地代码库到远程代码库时，你需要把它添加到你的项目配置里。像这样做
+
+$ git remote add origin git@github.com:nanfei9330/learngit.git
+git remote add origin https://github.com/try-git/try_git.git
+
+注意这里的“origin”只是一个习惯。它是你的远程代码库的别名，但是你可以用其他任何你喜欢的词。你甚至可以有多个远程代码库，你只需要给它们起不同的别名。
+之后，你想要推送你的本地代码库的主干分支到你的远程代码库：
+git push origin master
+
+The push command tells Git where to put our commits when we're ready, and boy we're ready. So let's push our local changes to our origin repo (on GitHub).
+
+The name of our remote is origin and the default local branch name is master. The -u tells Git to remember the parameters, so that next time we can simply run git push and Git will know what to do. Go ahead and push it!
+
+git push -u origin master
+
+取得远程代码库的一份本地拷贝
+
+如果你还没有一份远程代码库的本地版本（例如，如果你在另一台机器上开始工作，这台机器上还没有用过这个项目），你首先需要拷贝（clone）它。去到你的代码库想要拷贝到的文件夹下，并发送：
+
+Good, now go ahead and run git diff with the --staged option to see the changes you just staged. You should see that octodog.txt was created.
+
+git diff --staged
+
+
+Resetting the Stage
+
+
+So now that octodog is part of the family, octocat is all depressed. Since we love octocat more than octodog, we'll turn his frown around by removing octodog.txt.
+
+You can unstage files by using the git reset command. Go ahead and remove octofamily/octodog.txt.
+
+git reset octofamily/octodog.txt
+
+
+1.17 Undo
+
+
+git reset did a great job of unstaging octodog.txt, but you'll notice that he's still there. He's just not staged anymore. It would be great if we could go back to how things were before octodog came around and ruined the party.
+
+Files can be changed back to how they were at the last commit by using the command: git checkout -- <target>. Go ahead and get rid of all the changes since the last commit for octocat.txt
+
+git checkout -- octocat.txt
+
+1.18 Branching Out
+
+
+When developers are working on a feature or bug they'll often create a copy (aka. branch) of their code they can make separate commits to. Then when they're done they can merge this branch back into their main master branch.
+
+We want to remove all these pesky octocats, so let's create a branch called clean_up, where we'll do all the work:
+
+git branch clean_up
+
+You can use:
+
+git checkout -b new_branch
+
+to checkout and create a branch at the same time. This is the same thing as doing:
+
+git branch new_branch
+git checkout new_branch
+
+
+1.20 Removing All The Things
+
+
+Ok, so you're in the clean_up branch. You can finally remove all those pesky octocats by using the git rm command which will not only remove the actual files from disk, but will also stage the removal of the files for us.
+
+You're going to want to use a wildcard again to get all the octocats in one sweep, go ahead and run:
+
+git rm '*.txt'
+
+Removing one file is great and all, but what if you want to remove an entire folder? You can use the recursive option on git rm:
+
+git rm -r folder_of_cats
+
+This will recursively remove all folders and files from the given directory.
+
+
+1.21 Commiting Branch Changes
+
+
+Now that you've removed all the cats you'll need to commit your changes.
+
+Feel free to run git status to check the changes you're about to commit.
+
+git commit -m "Remove all the cats"
+
+
+ 
+
+
+
+
+
+Advice
+
+
+
+
+The '-a' option
+
+If you happen to delete a file without using 'git rm' you'll find that you still have to 'git rm' the deleted files from the working tree. You can save this step by using the '-a' option on 'git commit', which auto removes deleted files with the commit.
+
+git commit -am "Delete stuff"
+
+
+
+1.22 Switching Back to master
+
+
+Great, you're almost finished with the cat... er the bug fix, you just need to switch back to the master branch so you can copy (or merge) your changes from the clean_up branch back into the master branch.
+
+Go ahead and checkout the master branch:
+
+git checkout master
+
+
+
+Pull Requests
+
+If you're hosting your repo on GitHub, you can do something called a pull request.
+
+A pull request allows the boss of the project to look through your changes and make comments before deciding to merge in the change. It's a really great feature that is used all the time for remote workers and open-source projects.
+
+Check out the pull request help page for more information.
+
+
+1.23 Preparing to Merge
+
+
+Alrighty, the moment has come when you have to merge your changes from the clean_up branch into the master branch. Take a deep breath, it's not that scary.
+
+We're already on the master branch, so we just need to tell Git to merge the clean_up branch into it:
+
+git merge clean_up
+
+
+
+Merge Conflicts
+
+Merge Conflicts can occur when changes are made to a file at the same time. A lot of people get really scared when a conflict happens, but fear not! They aren't that scary, you just need to decide which code to keep.
+
+Merge conflicts are beyond the scope of this course, but if you're interested in reading more, take a look the section of the Pro Git book on how conflicts are presented.
+
+
+
+1.24 Keeping Things Clean
+
+
+Congratulations! You just accomplished your first successful bugfix and merge. All that's left to do is clean up after yourself. Since you're done with the clean_up branch you don't need it anymore.
+
+You can use git branch -d <branch name> to delete a branch. Go ahead and delete the clean_up branch now:
+
+git branch -d clean_up
+
+
+What if you have been working on a feature branch and you decide you really don't want this feature anymore? You might decide to delete the branch since you're scrapping the idea. You'll notice that git branch -d bad_feature doesn't work. This is because -d won't let you delete something that hasn't been merged.
+
+You can either add the --force (-f) option or use -D which combines -d -f together into one command.
+
+
+1.25 The Final Push
+
+
+Here we are, at the last step. I'm proud that you've made it this far, and it's been great learning Git with you. All that's left for you to do now is to push everything you've been working on to your remote repository, and you're done!
+
+git push
+
+
+
+Learning more about Git
+
+We only scratched the surface of Git in this course. There is so much more you can do with it. Check out the Git documentation for a full list of functions.
+
+The Pro Git book, by Scott Chacon, is an excellent resource to teach you the inner workings of Git.
+
+help.github and GitHub Training are also great for anything related to Git in general and using Git with GitHub.
+
+
+
+
+
+Code School 
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+
+
+1.25 The Final Push
+
+
+Great! You now have a little taste of the greatness of Git. You can take a look at the wrap up page for a little more information on Git and GitHub, oh, and of course your badge!
+
+Wrap it all Up
+
+
+
+
+ 
+
+
+Close
+
+
+Minimize
+
+
+Maximize
+
+
+TryGit—1300x310 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+diff --git a/octocat.txt b/octocat.txt
+index 7d8d808..e725ef6 100644
+--- a/octocat.txt
++++ b/octocat.txt
+@@ -1 +1 @@
+-A Tale of Two Octocats
++[mA Tale of Two Octocats and an Octodog
+
+
+
+Success!
+
+
+
+$ git add octofamily/octodog.txt
+
+ 
+
+
+
+
+
+
+Success!
+
+
+
+$ git -diff --staged
+
+ 
+
+
+invalid option -- d
+
+
+
+$ git diff --staged
+
+ 
+
+
+diff --git a/octofamily/octodog.txt b/octofamily/octodog.txt
+new file mode 100644
+index 0000000..cfbc74a
+--- /dev/null
++++ b/octofamily/octodog.txt
+@@ -0,0 +1 @@
++[mwoof
+
+
+
+Success!
+
+
+
+$ git reset octofamily/octodog.txt
+
+ 
+
+
+
+
+
+Success!
+
+
+
+$ git checkout -- octocat.txt
+
+ 
+
+
+
+
+
+
+Success!
+
+
+
+$ git branch clean_up
+
+ 
+
+
+
+
+
+
+Success!
+
+
+
+$ git checkout clean_up
+
+ 
+
+
+Switched to branch 'clean_up'
+
+
+
+Success!
+
+
+
+$ git rm '*.txt'
+
+ 
+
+
+rm 'blue_octocat.txt'
+rm 'octocat.txt'
+rm 'octofamily/baby_octocat.txt'
+rm 'octofamily/momma_octocat.txt'
+rm 'red_octocat.txt'
+
+
+
+Success!
+
+
+
+$ git commit -m "Remove all the cats"
+
+ 
+
+
+[clean_up 63540fe] Remove all the cats
+ 5 files changed, 5 deletions(-)
+ delete mode 100644 blue_octocat.txt
+ delete mode 100644 octocat.txt
+ delete mode 100644 octofamily/baby_octocat.txt
+ delete mode 100644 octofamily/momma_octocat.txt
+ delete mode 100644 red_octocat.txt
+
+Success!
+
+$ git checkout master
+
+Switched to branch 'master'
+Success!
+
+$ git merge clean_up
+
+Updating 3852b4d..ec6888b
+Fast-forward
+ blue_octocat.txt             |    1 -
+ octocat.txt                  |    1 -
+ octofamily/baby_octocat.txt  |    1 -
+ octofamily/momma_octocat.txt |    1 -
+ red_octocat.txt              |    1 -
+ 5 files changed, 5 deletions(-)
+ delete mode 100644 blue_octocat.txt
+ delete mode 100644 octocat.txt
+ delete mode 100644 octofamily/baby_octocat.txt
+ delete mode 100644 octofamily/momma_octocat.txt
+ delete mode 100644 red_octocat.txt
+
+Success!
+$ git branch -d clean_up
+
+ 
+Deleted branch clean_up (was ec6888b).
+
+Success!
+
+$ git push
+
+To https://github.com/try-git/try_git.git
+   3e70b0f..b576450  master -> master
+
+Success!
+
+
+
+
+
+
+
+
+git clone git@github.com:nanfei9330/learngit.git
+
+别名
+
+Git允许你为你常用的命令创建快捷方式（别名）。例如，如果你不想每次都输入git commit -m “some comment”，而是输入git c “some comment”，你可以向你的git全局配置里添加一个别名来实现，像这样：
+
+
+
+已有的git库中搭建新库，并且将本地的git仓库，上传到远程服务器的git库中，从而开始一个新的项目
+首先，在本地新建文件夹abc，进入到abc里面，然后git init。这样就在本地初始化了一个git项目abc。
+然后，登录到远程的git服务器上，到gitrepo目录下面，mkdir abc.git。然后进入abc.git目录。git  --bare init。这样就在服务器端建立了一个空的git项目。
+之后，在本地，进入到abc目录里面，增加远程仓库。git remote -v 显示项目目前的远程仓库，因为是新建项目，所以结果为空。git remote add origin git://127.0.0.1/abc.git这样就增加了远程仓库abc。
+最后，commit提交本地代码，git push origin master这样就把本地的git库上传到了远程git服务器的git库中了
+
+
+
+Git本地仓库与Github远程仓库关联
+
+SSH Key的配置：
+
+1.Windows下打开Git Bash，创建SSH Key，按提示输入密码，可以不填密码一路回车
+
+$ ssh-keygen -t rsa -C "注册邮箱"
+然后用户主目录/.ssh/下有两个文件，id_rsa是私钥，id_rsa.pub是公钥
+
+ 
+
+2.获取key，打开.ssh下的id_rsa.pub文件，里面的内容就是key的内容
+
+$ start ~/.ssh/id_rsa.pub
+
+4.测试ssh key是否成功，使用命令“ssh -T git@github.com”，如果出现You’ve successfully authenticated, but GitHub does not provide shell access 。这就表示已成功连上github。
+
+ 
+
+远程库与本地库之间的操作：
+
+1.从远程克隆一份到本地可以通过git clone
+
+Git支持HTTPS和SSH协议，SSH速度更快
+
+$ git clone git@github.com:nanfei9330/xx.git
+ 
+
+2.本地库关联远程库，在本地仓库目录运行命令：
+
+$ git remote add origin git@github.com:nanfei9330/learngit.git
+请替换为自己仓库的的SSH
+
+
+
+ 
+
+3.推送master分支的所有内容
+
+$ git push -u origin master
+第一次使用加上了-u参数，是推送内容并关联分支。
+
+推送成功后就可以看到远程和本地的内容一模一样，下次只要本地作了提交，就可以通过命令：
+
+$ git push origin master
+把最新内容推送到Github
+
+ 
+
+=================实战一下吧======================
+
+本地创建文本test.txt，运行:
+
+$ git add text.txt
+$ git commit -m"添加新文件"
+$ git push origin master
+然后就可以在github看到同步了
+
+其他：
+
+取回远程主机某个分支的更新，如
+
+$ git pull origin master
+
+
+
+
+
+
+
