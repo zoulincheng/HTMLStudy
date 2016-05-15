@@ -1,0 +1,29 @@
+<!--
+-->
+
+<head>
+	<meta charset = "utf-8">
+	<script type="text/javascript">
+	
+
+
+function titleCase(str) {
+	str = str.split(' ');
+	console.log(str);
+	var tempStr;
+	for (var i = 0; i < str.length; i++){
+		tempStr = str[i].split('');
+		console.log(tempStr);
+		tempStr[0].toUpperCase();
+		console.log(tempStr);
+	}
+	console.log(str);
+  return str;
+}
+
+titleCase("I'm a little tea pot");
+
+
+
+	</script>
+</head>
