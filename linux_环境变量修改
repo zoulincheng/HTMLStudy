@@ -1,0 +1,39 @@
+在做Linux开发的过程中，经常要添加一些环境变量，最典型的就是PATH。根据《.bashrc和/etc/profile》（下面讲解）可知，根据作用域的不同可以在.bashrc或者/etc/profile中添加相应的环境变量。
+
+下面是我在Ubuntu14.04的~/.bashrc中添加的环境变量：
+export PATH=$PATH:/home/liyihai/embeddedSystem/qtcreator-2.6.1/bin 
+export PATH=$PATH:/home/liyihai/embeddedSystem/qtarm-2009q1/bin 
+export PATH=$PATH:/home/liyihai/embeddedSystem/arago-2011.09/armv5te/bin 
+export PATH=$PATH:/home/liyihai/embeddedSystem/qt_libs/qt-arm-4.8.3/bin 
+export QMAKESPEC=$QMAKESPEC:/home/liyihai/embeddedSystem/qt_libs/qt-arm-4.8.3/mkspecs/qws/linux-omapl138-g++ 
+
+为了使其立即生效，执行下面命令：
+source .bashrc
+
+参考资料
+1.全局的对所有用户都可以的使用的PATH: 可以通过修改配置文件： /etc/bashrc 和 /etc/profile 来时配置，全局的PATH;
+例如：vi /etc/profile 
+在最后后加一行：PATH=THE_SET_GLOBLE_ENV_PATH:$PATH;
+接着换行： export PATH
+如果使其立即生效： source /etc/profile
+2.对于普通用户也可以设置，自己的路径：在自己的home目录中：
+ls -a | grep bash
+会找到两个文件： .bashrc 和 .bash_profile
+同样可以像修改 /etc/profile一样，修改 .bash_profile 来配置你的个性PATH 环境。
+同样修改后，若不重启，就使其立即生效的话，不要忘了 source .bash_profile.
+呵呵，最看看的你的修改后的PATH:  echo $PATH 或者 env  再者 set!!
+
+《.bashrc和/etc/profile》
+在Ubuntu中，~目录下有个隐藏文件.bashrc，有时候配置系统变量的时候要用到它，那么这个文件有什么作用呢？下面是一些总结。
+1、.bashrc
+这个文件主要保存个人的一些个性化设置，如命令别名、路径、环境变量等。也即在同一个服务器上，只对某个用户的个性化设置相关。而/etc/bashrc为每一个运行bash shell的用户执行此文件。当bash shell被打开时，该文件被读取。
+也就是说，~/.bashrc的设置对单个用户有效，而/etc/bashrc的设置则对用户的有效(在Ubuntu中其实默认下没有/etc/bashrc)。
+2、/etc/profile
+在上面提到，ubuntu中并没有/etc/bashrc这个文件，取而代之的是/etc/profile。可以在/etc/profile中设置一些环境变量，如下是我进行嵌入式开发时在/etc/profile中候配置的环境变量：
+
+
+Linux修改环境变量的方法：http://www.linuxdiyf.com/linux/13747.html
+Linux系统入门学习：在Linux中修改环境变量PATH：http://www.linuxdiyf.com/linux/12267.html
+如何在Linux上运行命令前临时清空Bash环境变量：http://www.linuxdiyf.com/linux/13217.html
+在Ubuntu下修改用户环境变量及系统环境变量：http://www.linuxdiyf.com/linux/9898.html
+Linux下PATH环境变量设置：http://www.linuxdiyf.com/linux/2927.html
